@@ -35,7 +35,7 @@ function readCss(folderName) {
 
 fs.writeFile(path.join(__dirname, '/project-dist', 'bundle.css'), '', (err) => {
   if (err) {
-    console.error('Ошибка при создании CSS-файла:', err);
+    console.error(err);
     return;
   }
   readCss('/styles');
