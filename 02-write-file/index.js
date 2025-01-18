@@ -21,7 +21,7 @@ rl.on('line', (input) => {
   if (input === 'exit') {
     console.log(message);
     rl.close();
-  }else{
+  } else {
     message += input;
   }
 });

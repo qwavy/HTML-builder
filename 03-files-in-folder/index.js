@@ -1,7 +1,8 @@
 const fs = require('node:fs');
+const path = require('path');
 
 fs.readdir(
-  'C:\\Users\\admin\\Desktop\\college\\rsschool\\HTML-builder\\03-files-in-folder\\secret-folder',
+  path.join(__dirname, '/secret-folder'),
   { withFileTypes: true },
   (err, files) => {
     if (err) {
@@ -12,9 +13,13 @@ fs.readdir(
         fs.stat(`${file.path}/${file.name}`, (err, stats) => {
           if (err) {
             console.log(err);
-          }else{
-
-            console.log(file.name, stats.size)
+          } else {
+            const parsed = path.parse(file.name);
+            console.log(
+              `${parsed.name} - ${path.basename(parsed.ext, '.')} - ${
+                stats.size
+              }`,
+            );
           }
         });
       });
