@@ -1,12 +1,12 @@
 const fs = require('node:fs');
+const path = require('path');
 
-fs.readFile(
-  'C:\\Users\\admin\\Desktop\\college\\rsschool\\HTML-builder\\01-read-file\\text.txt',
-  'utf8',
-  (err, data) => {
-    if (err) {
-      return err;
-    }
-    console.log(data);
-  },
-);
+const rr = fs.createReadStream(path.join(__dirname, 'text.txt'));
+
+rr.on("data", (chunk) => {
+    console.log(String(chunk))
+})
+
+rr.on("error",(error) => {
+    console.log(error)
+})

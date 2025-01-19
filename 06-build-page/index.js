@@ -45,6 +45,7 @@ function readCss(folderName) {
     },
   );
 }
+
 function copyCSS() {
   fs.writeFile(path.join(filePath, 'style.css'), '', (err) => {
     if (err) {
@@ -68,13 +69,41 @@ fs.mkdir(path.join(filePath, 'assets'), { recursive: true }, (err) => {
         console.log(err);
       } else {
         files.forEach((file) => {
-          console.log(file);
-          copyFile(
-            path.join(file.path, file.name),
-            path.join(filePath, `assets/${file.name}`),
-          );
+          fs.stat(path.join(file.path, file.name), (err, stats) => {
+            if (err) {
+              console.log(err);
+              return;
+            }
+            if (stats.isDirectory()) {
+              copyFilesFromDirectory(
+                path.join(file.path, file.name),
+                file.name,
+              );
+            }
+          });
         });
       }
     },
   );
 });
+
+function copyFilesFromDirectory(files, filesName) {
+  fs.mkdir(
+    path.join(filePath, 'assets', filesName),
+    { recursive: true },
+    (err) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+    },
+  );
+  fs.readdir(files, (err, file) => {
+    file.forEach((el) => {
+      copyFile(
+        path.join(__dirname, 'assets', filesName, el),
+        path.join(filePath, 'assets', filesName, el),
+      );
+    });
+  });
+}
