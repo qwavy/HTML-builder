@@ -2,6 +2,7 @@ const fs = require('node:fs');
 
 const path = require('path');
 const { copyFile } = require('node:fs/promises');
+const { match } = require('node:assert');
 
 const filePath = path.join(__dirname, '/project-dist');
 
@@ -106,4 +107,54 @@ function copyFilesFromDirectory(files, filesName) {
       );
     });
   });
+}
+
+//read tag files in html
+
+const rr = fs.createReadStream(path.join(__dirname, 'template.html'));
+
+let htmlData = ""
+
+
+collectingData();
+async function createIndexHTML(data) {
+  fs.writeFile(
+    path.join(__dirname, 'project-dist', 'index.html'),
+    data,
+    (err) => {
+      if (err) {
+        console.log(err);
+      }
+    },
+  );
+}
+
+async function collectingData() {
+  rr.on('data', (chunk) => {
+    htmlData = chunk.toString();
+  });
+
+  fs.readdir(path.join(__dirname, 'components'), (err, files) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    getDataFromComponents(files);
+  });
+}
+
+async function getDataFromComponents(files) {
+  try {
+    files.forEach((file) => {
+      const rrFile = fs.createReadStream(
+        path.join(__dirname, 'components', file),
+      );
+      rrFile.on('data', (chunk) => {
+        htmlData = htmlData.replace(`{{${path.basename(file, '.html')}}}`, chunk.toString())
+          createIndexHTML(htmlData)
+      });
+    });
+  } catch (e) {
+    throw e;
+  }
 }

@@ -40,4 +40,3 @@ fs.writeFile(path.join(__dirname, '/project-dist', 'bundle.css'), '', (err) => {
   }
   readCss('/styles');
 });
-

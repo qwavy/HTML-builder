@@ -31,4 +31,3 @@ rl.on('line', (input) => {
 process.on('beforeExit', () => {
   console.log('Process beforeExit event with code: ', message);
 });
-

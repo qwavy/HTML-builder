@@ -16,9 +16,7 @@ fs.readdir(
           } else {
             const parsed = path.parse(file.name);
             console.log(
-              `${parsed.name} - ${parsed.ext.split(".")[1]} - ${
-                stats.size
-              }`,
+              `${parsed.name} - ${parsed.ext.split('.')[1]} - ${stats.size}`,
             );
           }
         });
