@@ -6,6 +6,8 @@ const readline = require('node:readline');
 
 let message = '';
 
+console.log('Введите текст: (exit для выхода.)');
+
 const rl = readline.createInterface({ input, output });
 
 rl.question('', (answer) => {
