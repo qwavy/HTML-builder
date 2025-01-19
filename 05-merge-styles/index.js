@@ -39,5 +39,5 @@ fs.writeFile(path.join(__dirname, '/project-dist', 'bundle.css'), '', (err) => {
     return;
   }
   readCss('/styles');
-  readCss('/test-files/styles');
 });
+
